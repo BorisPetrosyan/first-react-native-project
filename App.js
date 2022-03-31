@@ -1,16 +1,18 @@
-import React, { useState } from 'react';
-import {StyleSheet, Text, View, TextInput, Button} from 'react-native';
+import React, {useState} from 'react';
+import {StyleSheet, Text, View, TextInput, Button , ScrollView} from 'react-native';
 
 export default function App() {
 
-    const [enterGoal,setEnterGoal] = useState('')
+    const [enterGoal, setEnterGoal] = useState('')
+    const [courseGoals, setCourseGoals] = useState([])
 
     const goalInputHandler = (enteredText) => {
         setEnterGoal(enteredText)
     }
 
     const addGoalHandler = () => {
-        console.log(enterGoal)
+        setCourseGoals(currentGoals => [...currentGoals, enterGoal])
+        setEnterGoal('')
     }
 
     return (
@@ -25,43 +27,45 @@ export default function App() {
                     />
                     <Button title="ADD" onPress={addGoalHandler}/>
                 </View>
-                <Text>{enterGoal}</Text>
+                <ScrollView >
+                    {courseGoals.map((goal) =>
+                        <View
+                            key={goal}
+                            style={styles.listItem}>
+                            <Text>{goal}</Text>
+                        </View>)}
+                </ScrollView>
                 <View/>
             </View>
 
 
-
-
-
-
-
             {/*Flexes*/}
-            <View
-                style={styles.flexContainer}
-            >
-                <View
-                    style={styles.flexContainer1}
-                >
-                    <Text>1</Text>
-                </View>
-                <View
-                    style={styles.flexContainer2}
-                >
-                    <Text>2</Text>
-                </View>
-                <View
-                    style={styles.flexContainer3}
-                >
-                    <Text>3</Text>
-                </View>
-            </View>
+            {/*<View*/}
+            {/*    style={styles.flexContainer}*/}
+            {/*>*/}
+            {/*    <View*/}
+            {/*        style={styles.flexContainer1}*/}
+            {/*    >*/}
+            {/*        <Text>1</Text>*/}
+            {/*    </View>*/}
+            {/*    <View*/}
+            {/*        style={styles.flexContainer2}*/}
+            {/*    >*/}
+            {/*        <Text>2</Text>*/}
+            {/*    </View>*/}
+            {/*    <View*/}
+            {/*        style={styles.flexContainer3}*/}
+            {/*    >*/}
+            {/*        <Text>3</Text>*/}
+            {/*    </View>*/}
+            {/*</View>*/}
         </View>
     );
 }
 
 const styles = StyleSheet.create({
     screen: {
-        padding:50
+        padding: 50
     },
     inputContainer: {
         flexDirection: 'row',
@@ -80,7 +84,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         padding: 10
     },
-    flexContainer3:{
+    flexContainer3: {
         backgroundColor: 'green',
         flex: 1,
         width: 100,
@@ -88,7 +92,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
-    flexContainer2:{
+    flexContainer2: {
         backgroundColor: 'blue',
         flex: 2,
         width: 70,
@@ -96,7 +100,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
-    flexContainer1:{
+    flexContainer1: {
         backgroundColor: 'red',
         flex: 3,
         width: 50,
@@ -104,12 +108,19 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
-    flexContainer:{
+    flexContainer: {
         padding: 50,
         flexDirection: 'row',
         width: '80%',
         height: 300,
         justifyContent: 'space-around',
         alignItems: 'stretch'
+    },
+    listItem: {
+        padding: 10,
+        marginVertical:10,
+        backgroundColor: '#CCC',
+        borderColor: 'black',
+        borderWidth: 1
     }
 });
